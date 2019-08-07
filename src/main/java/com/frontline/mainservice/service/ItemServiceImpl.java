@@ -7,5 +7,4 @@ import java.util.List;
 public interface ItemServiceImpl {
     public List<Item> getItems();
     public Item getItem(String itemId);
-    public Item buyItem(String itemId, int quantity);
 }

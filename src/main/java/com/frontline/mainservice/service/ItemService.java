@@ -22,10 +22,4 @@ public class ItemService implements ItemServiceImpl {
         Item item = restTemplate.getForObject("http://localhost:8081/api/item/" + itemId, Item.class);
         return item;
     }
-
-    @Override
-    public Item buyItem(String itemId, int quantity) {
-        //TODO: REST API call to catalogue to pay and buy
-        return null;
-    }
 }
