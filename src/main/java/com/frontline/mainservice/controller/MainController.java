@@ -3,6 +3,7 @@ package com.frontline.mainservice.controller;
 import com.frontline.mainservice.model.Item;
 import com.frontline.mainservice.model.Payment;
 import com.frontline.mainservice.model.Rating;
+import com.frontline.mainservice.service.ItemService;
 import com.frontline.mainservice.service.ItemServiceImpl;
 import com.frontline.mainservice.service.PaymentServiceImpl;
 import com.frontline.mainservice.service.RatingServiceImpl;
@@ -16,13 +17,19 @@ import java.util.List;
 public class MainController {
 
     @Autowired
-    private ItemServiceImpl itemService;
+    private ItemService itemService;
 
     @Autowired
     private RatingServiceImpl ratingService;
 
     @Autowired
     private PaymentServiceImpl paymentService;
+
+    @GetMapping("/health-check")
+    public String checkHealth() {
+       return "Working";
+    }
+
 
     @GetMapping("/items")
     public List<Item> getItems() {

@@ -2,7 +2,6 @@ package com.frontline.mainservice.model;
 
 public class Payment {
     private Integer id;
-
     private String itemId;
     private Integer quantity;
     private double price;
