@@ -11,11 +11,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 @Component
 public class ControllerInterceptor implements HandlerInterceptor {
+    private X509Certificate serverCertificate = CertX509Handler.loadCertFromKeyStore();
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public ControllerInterceptor() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request,
@@ -25,7 +33,6 @@ public class ControllerInterceptor implements HandlerInterceptor {
         MethodParameter[] parms = method.getMethodParameters();
         for (MethodParameter parm : parms) {
             logger.info(parm.getNestedGenericParameterType().getTypeName());
-            System.out.println(parm.getNestedGenericParameterType().getTypeName());
         }
 
         X509Certificate[] certs = (X509Certificate[]) request.getAttribute("javax.servlet.request.X509Certificate");
@@ -45,10 +52,12 @@ public class ControllerInterceptor implements HandlerInterceptor {
                            HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
         logger.info("this is interceptor, postHandle method");
+        response.addHeader("Cert",CertX509Handler.stringFromCert(serverCertificate));
+
     }
     public void afterCompletion(HttpServletRequest request,
                                 HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
-        logger.info("this is interceptor, afterCompletion method");
+        logger.info("Header :"+ response.getHeader("Cert"));
     }
 }

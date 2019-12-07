@@ -5,8 +5,15 @@ public class Item {
     private String itemName;
     private int quantity;
     private double price;
-    private Integer numberOfRaters;
-    private Integer rating;
+
+    public Item(String itemID, String itemName, int quantity, double price) {
+        this.itemID = itemID;
+        this.itemName = itemName;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public Item() {}
 
     public void setItemID(String itemID) {
         this.itemID = itemID;
@@ -22,14 +29,6 @@ public class Item {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public void setNumberOfRaters(Integer numberOfRaters) {
-        this.numberOfRaters = numberOfRaters;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
     }
 
     public String getItemID() {
@@ -48,11 +47,4 @@ public class Item {
         return price;
     }
 
-    public Integer getNumberOfRaters() {
-        return numberOfRaters;
-    }
-
-    public Integer getRating() {
-        return rating;
-    }
 }
