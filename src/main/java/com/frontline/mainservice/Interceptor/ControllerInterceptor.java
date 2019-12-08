@@ -28,36 +28,37 @@ public class ControllerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
-        boolean certVerified = false;
-        HandlerMethod method = (HandlerMethod) handler;
-        MethodParameter[] parms = method.getMethodParameters();
-        for (MethodParameter parm : parms) {
-            logger.info(parm.getNestedGenericParameterType().getTypeName());
-        }
+        //for demonstration purpose - disable the browser certificate check
+//        boolean certVerified = false;
+//        HandlerMethod method = (HandlerMethod) handler;
+//        MethodParameter[] parms = method.getMethodParameters();
+//        for (MethodParameter parm : parms) {
+//            logger.info(parm.getNestedGenericParameterType().getTypeName());
+//        }
+//
+//        X509Certificate[] certs = (X509Certificate[]) request.getAttribute("javax.servlet.request.X509Certificate");
+//
+//        try {
+//            certVerified = CertX509Handler.validateCertificate(certs);
+//        } catch (Exception e) {
+//            response.setStatus(400);    //chrome displays its generic page for 400
+//            response.setHeader("Error", e.getMessage());
+//
+//        }
 
-        X509Certificate[] certs = (X509Certificate[]) request.getAttribute("javax.servlet.request.X509Certificate");
-
-        try {
-            certVerified = CertX509Handler.validateCertificate(certs);
-        } catch (Exception e) {
-            response.setStatus(4000);    //chrome displays its generic page for 400
-            response.setHeader("Error", e.getMessage());
-
-        }
-
-        return certVerified;
+        return true; //for demo otherwise return certVerified
     }
 
     public void postHandle(HttpServletRequest request,
                            HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
-        logger.info("this is interceptor, postHandle method");
-        response.addHeader("Cert",CertX509Handler.stringFromCert(serverCertificate));
+//        logger.info("this is interceptor, postHandle method");
+//        response.addHeader("Cert",CertX509Handler.stringFromCert(serverCertificate));
 
     }
     public void afterCompletion(HttpServletRequest request,
                                 HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
-        logger.info("Header :"+ response.getHeader("Cert"));
+//        logger.info("Header :"+ response.getHeader("Cert"));
     }
 }

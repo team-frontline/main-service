@@ -1,4 +1,6 @@
 package com.frontline.mainservice.utils;
 
-public enum StateMessage {
+public class StateMessage {
+    public static final String SUCCESS = "SUCCESS";
+    public static final String FAILED = "FAILED";
 }

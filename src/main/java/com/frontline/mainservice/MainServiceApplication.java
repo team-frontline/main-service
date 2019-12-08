@@ -1,6 +1,7 @@
 package com.frontline.mainservice;
 
 import com.frontline.mainservice.config.Config;
+import com.frontline.mainservice.service.ItemService;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -37,12 +38,12 @@ public class MainServiceApplication {
         csrParamMap.put("country", "SL");
         Config.setKeyStoreName("ms-service-store1.jks");
         Config.setKeyStorePassword("pass123");
+        CertManager certManager = new CertManager();
 
 
         try {
             File ks = new File(Config.SOURCE_PATH + Config.getKeyStoreName());
             if (!ks.exists()) {
-                CertManager certManager = new CertManager();
                 certManager.initiateCertificate(Config.SOURCE_PATH, "ms-service-service1", csrParamMap);
                 KeyStoreManager.installCert(Config.SOURCE_PATH, certManager.getKeyPair()
                         , "ms-service-service1.org", Config.getKeyStorePassword(), certManager.getCertificate(), Config.getKeyStoreName());
@@ -53,6 +54,21 @@ public class MainServiceApplication {
         } finally {
             SpringApplication.run(MainServiceApplication.class, args);
         }
+
+
+//        Map<String, String> csrParamMap1 = new HashMap<String, String>();
+//        csrParamMap1.put("commonName", "spg.org");
+//        csrParamMap1.put("organizationUnit", "MSChain");
+//        csrParamMap1.put("organizationName", "Frontline.org");
+//        csrParamMap1.put("localityName", "Colombo");
+//        csrParamMap1.put("stateName", "West");
+//        csrParamMap1.put("country", "SL");
+//        try {
+//            certManager.initiateCertificate(Config.SOURCE_PATH, "spg.org", csrParamMap);
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
 
     }
 
